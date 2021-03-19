@@ -80,15 +80,15 @@ var spotifyApi = new SpotifyWebApi({
         console.error('Error getting Tokens:', error);
         res.send(`Error getting Tokens: ${error}`);
       });
-
-      
-
   });
   
   function getMyData() {
     (async () => {
-      const me = await spotifyApi.getMe();
-      console.log(me.body.id);
+      const track = await spotifyApi.getMyCurrentPlayingTrack();
+      let trackId = track.body.item.id
+      const playing = await spotifyApi.getTrack(trackId);
+      console.log(playing.body.name)
+      console.log(playing.body.artists[0].name)
     })().catch(e => {
       console.error(e);
     });
